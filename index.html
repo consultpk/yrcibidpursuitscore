@@ -287,7 +287,142 @@
     .btn-retry { display: inline-block; margin-top: 22px; background: transparent; border: 2px solid currentColor; padding: 10px 28px; font-size: 14px; font-weight: 600; border-radius: 8px; cursor: pointer; opacity: .7; transition: opacity .2s; }
     .btn-retry:hover { opacity: 1; }
 
+    /* ── Print button ── */
+    .result-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+    .btn-print {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, #7a00df, #5a00a8);
+      color: #fff; border: none;
+      padding: 11px 28px; font-size: 14px; font-weight: 700;
+      border-radius: 8px; cursor: pointer;
+      transition: opacity .2s, transform .1s; letter-spacing: .3px;
+      font-family: inherit;
+    }
+    .btn-print:hover { opacity: .9; }
+    .btn-print:active { transform: scale(.98); }
+    .btn-print svg { flex-shrink: 0; }
+
     footer { text-align: center; font-size: 12px; color: #aab4cc; padding: 24px; }
+
+    /* ══════════════════════════════════════════
+       PRINT / PDF STYLES
+    ══════════════════════════════════════════ */
+    @media print {
+      /* Hide everything — only the print report shows */
+      body > *:not(#print-report) { display: none !important; }
+
+      #print-report { display: block !important; }
+
+      body { background: #fff !important; margin: 0; padding: 0; }
+
+      /* Force background colors to print */
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+      @page {
+        size: A4;
+        margin: 20mm 18mm 18mm;
+      }
+    }
+
+    /* Print report (hidden on screen, shown on print) */
+    #print-report {
+      display: none;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* Print header */
+    .pr-header {
+      background: linear-gradient(135deg, #1a0030, #7a00df);
+      color: #fff;
+      padding: 24px 28px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .pr-header-left .pr-logo { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; opacity: .65; margin-bottom: 6px; }
+    .pr-header-left .pr-title { font-size: 22px; font-weight: 800; line-height: 1.2; }
+    .pr-header-left .pr-opp { font-size: 14px; opacity: .75; margin-top: 4px; }
+    .pr-header-right { text-align: right; }
+    .pr-header-right .pr-date { font-size: 11px; opacity: .6; margin-bottom: 4px; }
+    .pr-header-right .pr-score-big { font-size: 40px; font-weight: 900; line-height: 1; }
+    .pr-header-right .pr-score-max { font-size: 13px; opacity: .6; }
+
+    /* Tier banner */
+    .pr-tier {
+      border-radius: 8px;
+      padding: 14px 20px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .pr-tier-badge { font-size: 15px; font-weight: 800; white-space: nowrap; }
+    .pr-tier-text h3 { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+    .pr-tier-text p  { font-size: 12px; line-height: 1.5; opacity: .85; }
+    .pr-tier.tier-no       { background: #fff1f0; color: #c0392b; border: 2px solid #f5c6c2; }
+    .pr-tier.tier-caution  { background: #fffbf0; color: #b7770d; border: 2px solid #f8e4b2; }
+    .pr-tier.tier-likely   { background: #f0faf4; color: #1a7a45; border: 2px solid #b2e0c4; }
+    .pr-tier.tier-strong-r { background: #f0e5ff; color: #5a00a8; border: 2px solid #c084fc; }
+
+    /* Deal killer alert in print */
+    .pr-killer-alert {
+      display: none;
+      background: #fff1f0; color: #c0392b; border: 1.5px solid #fcc;
+      border-radius: 8px; padding: 10px 16px;
+      font-size: 12px; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .pr-killer-alert.visible { display: block; }
+
+    /* Metrics grid */
+    .pr-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .pr-metric {
+      border: 1.5px solid #e4e9f4;
+      border-radius: 8px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .pr-metric .pm-val { font-size: 20px; font-weight: 800; color: #1a0030; line-height: 1; }
+    .pr-metric .pm-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #8898bb; margin-top: 3px; }
+
+    /* Section bars */
+    .pr-sections { margin-bottom: 18px; }
+    .pr-sections h3 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #7a00df; margin-bottom: 10px; }
+    .pr-sec-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .pr-sec-name { font-size: 12px; font-weight: 600; color: #1a0030; width: 180px; flex-shrink: 0; }
+    .pr-sec-bar-bg { flex: 1; height: 8px; background: #eef1f8; border-radius: 99px; overflow: hidden; }
+    .pr-sec-bar-fill { height: 100%; border-radius: 99px; }
+    .pr-sec-pts { font-size: 12px; font-weight: 700; color: #5a6a8a; width: 55px; text-align: right; flex-shrink: 0; }
+
+    /* Q detail table */
+    .pr-q-section { margin-bottom: 16px; page-break-inside: avoid; }
+    .pr-q-section h3 { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 10px; border-radius: 6px; margin-bottom: 8px; }
+    .pr-q-section.sec1 h3 { background: #f5eeff; color: #7a00df; }
+    .pr-q-section.sec2 h3 { background: #e8f6ff; color: #0693e3; }
+    .pr-q-section.sec3 h3 { background: #f3e8ff; color: #9b51e0; }
+    .pr-q-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .pr-q-table th { text-align: left; padding: 5px 8px; background: #f8f9fc; border-bottom: 1.5px solid #e4e9f4; font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #8898bb; }
+    .pr-q-table td { padding: 6px 8px; border-bottom: 1px solid #f0f2f7; vertical-align: middle; color: #1a0030; }
+    .pr-q-table tr:last-child td { border-bottom: none; }
+    .pr-score-pill { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 6px; font-size: 11px; font-weight: 800; }
+    .pill-5 { background: #d5f0e0; color: #1a7a45; }
+    .pill-4 { background: #e8f6ff; color: #0693e3; }
+    .pill-3 { background: #f5f8ff; color: #5a6a8a; }
+    .pill-2 { background: #fff3cd; color: #b7770d; }
+    .pill-1 { background: #fde8e7; color: #c0392b; }
+    .pill-0 { background: #f0f2f7; color: #8898bb; }
+    .pr-killer-flag { font-size: 10px; color: #c0392b; font-weight: 700; margin-left: 4px; }
+
+    /* Print footer */
+    .pr-footer { margin-top: 20px; padding-top: 12px; border-top: 1px solid #e4e9f4; display: flex; justify-content: space-between; font-size: 10px; color: #aab4cc; }
+
 
     @media (max-width: 900px) {
       .score-pane { display: none; }
@@ -368,7 +503,15 @@
       <div class="result-description" id="rDesc"></div>
       <div class="result-killers" id="rKillers"></div>
       <div class="result-breakdown" id="rBreakdown"></div>
-      <button class="btn-retry" onclick="resetForm()">Retake Assessment</button>
+      <div class="result-actions">
+        <button class="btn-print" id="btnPrint" onclick="printResults()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+          </svg>
+          Print / Save as PDF
+        </button>
+        <button class="btn-retry" onclick="resetForm()">Retake Assessment</button>
+      </div>
     </div>
 
   </div><!-- /form-col -->
@@ -381,6 +524,9 @@
 </div>
 
 <footer>© YRCI · Bid Pursuit Scorecard</footer>
+
+<!-- ══ Print report — direct child of body so @media print can target it ══ -->
+<div id="print-report"></div>
 
 <script>
 // ── Data ────────────────────────────────────────────────────────────
@@ -740,6 +886,117 @@ function showResult(score) {
   ].map(b => `<div class="breakdown-item"><div class="bd-val">${b.val}</div><div class="bd-label">${b.label}</div></div>`).join('');
 
   resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Print ────────────────────────────────────────────────────────────
+function printResults() {
+  const oppTitle = document.getElementById('opportunity-title').value.trim() || 'Untitled Opportunity';
+  const score    = parseInt(document.getElementById('rScore').textContent, 10);
+  const tier     = getTier(score);
+  const pct      = ((score / 175) * 100).toFixed(1);
+  const today    = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+  // Collect per-question data
+  const secScores = [0, 0, 0];
+  let dealKillers = 0, ones = 0, unks = 0;
+  const qData = [];
+  for (let i = 1; i <= TOTAL_Q; i++) {
+    const checked = document.querySelector(`input[name="q${i}_score"]:checked`);
+    const killer  = document.querySelector(`input[name="q${i}_killer"]`);
+    const val     = checked ? parseInt(checked.value, 10) : null;
+    const isKiller = killer && killer.checked;
+    if (val !== null) { secScores[Q_INDEX[i-1].secIdx] += val; }
+    if (val === 1) ones++;
+    if (val === 0) unks++;
+    if (isKiller) dealKillers++;
+    qData.push({ num: i, text: SECTIONS[Q_INDEX[i-1].secIdx].questions[Q_INDEX[i-1].qIdxInSec], val, isKiller, secIdx: Q_INDEX[i-1].secIdx });
+  }
+
+  const PILL_CLASS = { 5:'pill-5', 4:'pill-4', 3:'pill-3', 2:'pill-2', 1:'pill-1', 0:'pill-0' };
+  const SCORE_LABEL = { 5:'5', 4:'4', 3:'3', 2:'2', 1:'1', 0:'Unk' };
+
+  // Build section question tables
+  const secQHTML = SECTIONS.map((sec, si) => {
+    const secQ = qData.filter(q => q.secIdx === si);
+    return `
+      <div class="pr-q-section sec${si+1}">
+        <h3>${sec.label}</h3>
+        <table class="pr-q-table">
+          <thead><tr><th>#</th><th>Question</th><th>Score</th><th>Flag</th></tr></thead>
+          <tbody>
+            ${secQ.map(q => `
+              <tr>
+                <td style="color:#8898bb;width:24px">${q.num}</td>
+                <td>${q.text}</td>
+                <td><span class="pr-score-pill ${PILL_CLASS[q.val] || 'pill-0'}">${SCORE_LABEL[q.val] ?? '—'}</span></td>
+                <td>${q.isKiller ? '<span class="pr-killer-flag">⚠ DK</span>' : ''}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }).join('');
+
+  // Build section bar rows
+  const secBarsHTML = SECTIONS.map((sec, si) => {
+    const pctBar = Math.round((secScores[si] / sec.max) * 100);
+    const barColors = ['#7a00df', '#0693e3', '#9b51e0'];
+    return `
+      <div class="pr-sec-row">
+        <div class="pr-sec-name">${sec.label}</div>
+        <div class="pr-sec-bar-bg"><div class="pr-sec-bar-fill" style="width:${pctBar}%;background:${barColors[si]}"></div></div>
+        <div class="pr-sec-pts">${secScores[si]} / ${sec.max}</div>
+      </div>`;
+  }).join('');
+
+  document.getElementById('print-report').innerHTML = `
+    <div class="pr-header">
+      <div class="pr-header-left">
+        <div class="pr-logo">YRCI · Bid Pursuit</div>
+        <div class="pr-title">Bid Pursuit Scorecard</div>
+        <div class="pr-opp">${oppTitle}</div>
+      </div>
+      <div class="pr-header-right">
+        <div class="pr-date">${today}</div>
+        <div class="pr-score-big">${score}</div>
+        <div class="pr-score-max">out of 175 &nbsp;·&nbsp; ${pct}%</div>
+      </div>
+    </div>
+
+    <div class="pr-tier ${tier.cls}">
+      <div class="pr-tier-badge">${tier.badge}</div>
+      <div class="pr-tier-text">
+        <h3>${tier.headline}</h3>
+        <p>${tier.desc}</p>
+      </div>
+    </div>
+
+    ${dealKillers > 0 ? `<div class="pr-killer-alert visible">⚠ ${dealKillers} potential deal killer${dealKillers > 1 ? 's' : ''} identified — proceed with extreme caution.</div>` : ''}
+
+    <div class="pr-metrics">
+      <div class="pr-metric"><div class="pm-val">${pct}%</div><div class="pm-label">Pursuit Value</div></div>
+      <div class="pr-metric"><div class="pm-val">${secScores[0]}/60</div><div class="pm-label">Prospect Info</div></div>
+      <div class="pr-metric"><div class="pm-val">${secScores[1]}/75</div><div class="pm-label">Internal Info</div></div>
+      <div class="pr-metric"><div class="pm-val">${secScores[2]}/40</div><div class="pm-label">Market / Comp</div></div>
+      <div class="pr-metric"><div class="pm-val">${ones}</div><div class="pm-label">Rated 1</div></div>
+      <div class="pr-metric"><div class="pm-val">${unks}</div><div class="pm-label">Unknown</div></div>
+      <div class="pr-metric"><div class="pm-val">${dealKillers}</div><div class="pm-label">Deal Killers</div></div>
+      <div class="pr-metric"><div class="pm-val">35</div><div class="pm-label">Total Factors</div></div>
+    </div>
+
+    <div class="pr-sections">
+      <h3>Section Scores</h3>
+      ${secBarsHTML}
+    </div>
+
+    ${secQHTML}
+
+    <div class="pr-footer">
+      <span>© YRCI · Bid Pursuit Scorecard</span>
+      <span>Generated ${today}</span>
+    </div>
+  `;
+
+  window.print();
 }
 
 // ── Reset ────────────────────────────────────────────────────────────
